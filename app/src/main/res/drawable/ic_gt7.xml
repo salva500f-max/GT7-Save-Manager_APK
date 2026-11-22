@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="108dp"
-    android:height="108dp"
-    android:viewportWidth="108"
-    android:viewportHeight="108">
-    <path android:fillColor="#0E1117" android:pathData="M0,0h108v108h-108z"/>
-    <path android:fillColor="#E60012" android:pathData="M14,24 L94,24 L86,84 L14,84 Z"/>
-    <path android:fillColor="#11151C" android:pathData="M18,28 L89,28 L82,80 L18,80 Z"/>
-    <path android:fillColor="#FFFFFF" android:pathData="M26,42 H48 V48 H32 V60 H42 V54 H37 V49 H48 V66 H26 Z"/>
-    <path android:fillColor="#E60012" android:pathData="M54,42 H80 L76,49 H69 L64,66 H57 L62,49 H54 Z"/>
+<vector xmlns:android="http://android.com"
+    android:width="220dp"
+    android:height="120dp"
+    android:viewportWidth="220"
+    android:viewportHeight="120">
+    <!-- Fond sombre avec bordure rouge sport -->
+    <path android:fillColor="#0E1117" android:pathData="M12,8 L208,8 L196,112 L12,112 Z"/>
+    <path android:fillColor="#E60012" android:pathData="M12,8 L208,8 L206,13 L12,13 Z"/>
+    <path android:fillColor="#E60012" android:pathData="M12,107 L196,107 L196,112 L12,112 Z"/>
+
+    <!-- Ligne rouge supérieure (GRAN TURISMO) -->
+    <path android:fillColor="#E60012" android:pathData="M28,22 H184 V26 H28 Z"/>
+    <path android:fillColor="#FFFFFF" android:pathData="M34,29 H178 V32 H34 Z"/>
+
+    <!-- Grand G blanc incliné -->
+    <path android:fillColor="#FFFFFF" android:pathData="M36,42 H82 L79,51 H49 L44,82 H70 L73,68 H59 L61,60 H84 L78,91 H30 Z"/>
+
+    <!-- Grand T blanc incliné -->
+    <path android:fillColor="#FFFFFF" android:pathData="M90,42 H138 L135,51 H118 L111,91 H99 L106,51 H88 Z"/>
+
+    <!-- Grand 7 rouge Gran Turismo -->
+    <path android:fillColor="#E60012" android:pathData="M144,42 H188 L185,51 L161,91 H148 L171,51 H142 Z"/>
 </vector>
