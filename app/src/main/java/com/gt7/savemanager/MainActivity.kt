@@ -104,9 +104,7 @@ class MainActivity : Activity() {
                 cornerRadius = 22f
                 setStroke(2, Color.parseColor("#33415C"))
             }
-            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.4f).apply {
-                rightMargin = 16
-            }
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.4f).apply { rightMargin = 16 }
         }
 
         val btnSaveIp = Button(this).apply {
@@ -134,7 +132,6 @@ class MainActivity : Activity() {
 
         ipRow.addView(ipInput)
         ipRow.addView(btnSaveIp)
-
         val spinnerLabel = TextView(this).apply {
             text = "SAUVEGARDE À RESTAURER (POUR LE MODE JOUER)"
             textSize = 11f
@@ -197,7 +194,6 @@ class MainActivity : Activity() {
         root.addView(statusText)
         scrollView.addView(root)
         setContentView(scrollView)
-
         refreshBackupList()
     }
 
@@ -212,45 +208,59 @@ class MainActivity : Activity() {
         backupList = baseDir.listFiles { f -> f.isDirectory && f.name.startsWith("Backup_") }
             ?.sortedByDescending { it.name } ?: emptyList()
 
-        val displayNames = if (backupList.isEmpty()) {
-            listOf("Aucune sauvegarde disponible")
-        } else {
-            backupList.mapIndexed { index, file ->
-                if (index == 0) "${file.name} (Plus récente)" else file.name
+        val displayNames = if (backupList.isEmpty()) listOf("Aucune sauvegarde disponible")
+        else backupList.mapIndexed { i, f -> if (i == 0) "${f.name} (Plus récente)" else f.name }
+
+        backupSpinner.adapter = object : ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, displayNames) {
+            override fun getView(p: Int, v: View?, g: ViewGroup): View = (super.getView(p, v, g) as TextView).apply {
+                setTextColor(Color.WHITE); textSize = 15f
+            }
+            override fun getDropDownView(p: Int, v: View?, g: ViewGroup): View = (super.getDropDownView(p, v, g) as TextView).apply {
+                setBackgroundColor(Color.parseColor("#1E2636")); setTextColor(Color.WHITE); textSize = 15f; setPadding(32, 28, 32, 28)
             }
         }
-
-        val adapter = object : ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, displayNames) {
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                return (super.getView(position, convertView, parent) as TextView).apply {
-                    setTextColor(Color.WHITE)
-                    textSize = 15f
-                }
-            }
-
-            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-                return (super.getDropDownView(position, convertView, parent) as TextView).apply {
-                    setBackgroundColor(Color.parseColor("#1E2636"))
-                    setTextColor(Color.WHITE)
-                    textSize = 15f
-                    setPadding(32, 28, 32, 28)
-                }
-            }
-        }
-        backupSpinner.adapter = adapter
     }
 
-    private fun createStyledButton(label: String, c1: String, c2: String, onClick: () -> Unit): Button {
-        return Button(this).apply {
-            text = label
-            textSize = 16f
-            setTextColor(Color.WHITE)
-            typeface = Typeface.DEFAULT_BOLD
-            isAllCaps = false
-            background = GradientDrawable(
-                GradientDrawable.Orientation.LEFT_RIGHT,
-                intArrayOf(Color.parseColor(c1), Color.parseColor(c2))
-            ).apply { cornerRadius = 30f }
-            }
+    private fun createStyledButton(label: String, c1: String, c2: String, onClick: () -> Unit) = Button(this).apply {
+        text = label; textSize = 16f; setTextColor(Color.WHITE); typeface = Typeface.DEFAULT_BOLD; isAllCaps = false
+        background = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, intArrayOf(Color.parseColor(c1), Color.parseColor(c2))).apply { cornerRadius = 30f }
+        layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 145).apply { bottomMargin = 24 }
+        setOnClickListener { onClick() }
+    }
+
+    private fun runFtpTask(isBackup: Boolean) {
+        val ip = ipInput.text.toString().trim()
+        val baseDir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Sauvegardes_GT7").apply { mkdirs() }
+        progressBar.visibility = ProgressBar.VISIBLE
+        statusText.text = "Connexion FTP à $ip:2121..."
+
+        thread {
+            val ftp = FTPClient().apply { connectTimeout = 7000 }
+            try {
+                ftp.connect(ip, 2121); ftp.login("anonymous", ""); ftp.enterLocalPassiveMode(); ftp.setFileType(FTP.BINARY_FILE_TYPE)
+                if (isBackup) {
+                    val stamp = SimpleDateFormat("yyyy-MM-dd_HH'h'mm", Locale.getDefault()).format(Date())
+                    val destDir = File(baseDir, "Backup_$stamp").apply { mkdirs() }
+                    var count = 0
+                    for (f in ftp.listFiles(ps4Dir)) if (f.isFile) {
+                        FileOutputStream(File(destDir, f.name)).use { ftp.retrieveFile("$ps4Dir/${f.name}", it) }; count++
+                    }
+                    updateUi("✅ Sauvegarde réussie ($count fichiers) !\nDossier : Backup_$stamp", true)
+                } else {
+                    if (backupList.isEmpty()) updateUi("❌ Aucune sauvegarde trouvée !")
+                    else {
+                        val chosen = backupList[backupSpinner.selectedItemPosition.coerceIn(0, backupList.size - 1)]
+                        chosen.listFiles()?.forEach { if (it.isFile) FileInputStream(it).use { inp -> ftp.storeFile("$ps4Dir/${it.name}", inp) } }
+                        updateUi("✅ Restauration terminée (${chosen.name}) !\nFermez et relancez GT7 sur la PS4.")
+                    }
+                }
+                ftp.logout()
+            } catch (e: Exception) { updateUi("❌ Erreur : ${e.message}") }
+            finally { try { ftp.disconnect() } catch (_: Exception) {} }
         }
+    }
+
+    private fun updateUi(msg: String, refreshList: Boolean = false) = runOnUiThread {
+        progressBar.visibility = ProgressBar.INVISIBLE; statusText.text = msg; if (refreshList) refreshBackupList()
+    }
 }
