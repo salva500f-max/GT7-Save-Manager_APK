@@ -251,3 +251,5 @@ class MainActivity : Activity() {
                 GradientDrawable.Orientation.LEFT_RIGHT,
                 intArrayOf(Color.parseColor(c1), Color.parseColor(c2))
             ).apply { cornerRadius = 30f }
+            }
+        }
