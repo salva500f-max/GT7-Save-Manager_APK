@@ -253,3 +253,4 @@ class MainActivity : Activity() {
             ).apply { cornerRadius = 30f }
             }
         }
+}
