@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://android.com">
+    <background android:drawable="@mipmap/ic_launcher"/>
+    <foreground>
+        <inset
+            android:drawable="@mipmap/ic_launcher"
+            android:inset="16%" />
+    </foreground>
+</adaptive-icon>
