@@ -100,7 +100,7 @@ class MainActivity : Activity() {
         }
 
         val subtitle = TextView(this).apply {
-            text = "BACKUP MANAGER • PS4 (CUSA24769)"; textSize = 11f; setTextColor(Color.parseColor("#8A99B5")); setPadding(0, 6, 0, 35)
+            text = "SAVE MANAGER • PS4 (CUSA24769) • v1.3.1"; textSize = 11f; setTextColor(Color.parseColor("#8A99B5")); setPadding(0, 6, 0, 35)
         }
         ipLabel = TextView(this).apply {
             textSize = 11f; setTextColor(Color.parseColor("#8A99B5"))
