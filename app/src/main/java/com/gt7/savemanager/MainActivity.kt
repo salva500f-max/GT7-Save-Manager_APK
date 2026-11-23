@@ -85,7 +85,7 @@ class MainActivity : Activity() {
         topBar.addView(btnLang)
 
        val logo = ImageView(this).apply {
-    setImageResource(R.mipmap.ic_launcher)
+    setImageResource(R.mipmap.ic_launcher_art)
     clipToOutline = true
     outlineProvider = object : android.view.ViewOutlineProvider() {
         override fun getOutline(view: View, outline: android.graphics.Outline) {
