@@ -164,7 +164,7 @@ class MainActivity : Activity() {
             layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { topMargin = 14 }
         }
 
-        root.addView(topBar); root.addView(logo); root.addView(title); root.addView(subtitle)
+        root.addView(topBar); root.addView(logo); root.addView(subtitle)
         root.addView(ipLabel); root.addView(ipRow); root.addView(spinnerLabel); root.addView(backupSpinner)
         root.addView(btnJouer); root.addView(btnQuitter); root.addView(progressBar); root.addView(statusText)
         scrollView.addView(root); setContentView(scrollView); applyLanguage()
