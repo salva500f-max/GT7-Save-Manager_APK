@@ -84,27 +84,27 @@ class MainActivity : Activity() {
         }
         topBar.addView(btnLang)
 
-       val logo = ImageView(this).apply {
-    setImageResource(R.mipmap.ic_launcher_art)
-    clipToOutline = true
-    outlineProvider = object : android.view.ViewOutlineProvider() {
-        override fun getOutline(view: View, outline: android.graphics.Outline) {
-            outline.setRoundRect(0, 0, view.width, view.height, 45f)
-        }
-    }
-    layoutParams = LinearLayout.LayoutParams(340, 340).apply { bottomMargin = 18 }
-}
-
-        val title = TextView(this).apply {
-            text = "GRAN TURISMO 7"; textSize = 24f; setTextColor(Color.WHITE); typeface = Typeface.DEFAULT_BOLD; letterSpacing = 0.12f
+               val logo = ImageView(this).apply {
+            setImageResource(R.drawable.banner_gt7)
+            adjustViewBounds = true
+            scaleType = ImageView.ScaleType.FIT_CENTER
+            clipToOutline = true
+            outlineProvider = object : android.view.ViewOutlineProvider() {
+                override fun getOutline(view: View, outline: android.graphics.Outline) {
+                    outline.setRoundRect(0, 0, view.width, view.height, 36f)
+                }
+            }
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                topMargin = 14
+                bottomMargin = 16
+            }
         }
 
         val subtitle = TextView(this).apply {
-            text = "SAVE MANAGER • PS4 (CUSA24769) • v1.3.1"; textSize = 11f; setTextColor(Color.parseColor("#8A99B5")); setPadding(0, 6, 0, 35)
-        }
-        ipLabel = TextView(this).apply {
-            textSize = 11f; setTextColor(Color.parseColor("#8A99B5"))
-            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            text = "PS4 OFFLINE PATCH • CUSA24769 • v2.0"; textSize = 11f; setTextColor(Color.parseColor("#8A99B5")); setPadding(0, 4, 0, 32)
         }
 
         val ipRow = LinearLayout(this).apply {
