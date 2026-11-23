@@ -6,8 +6,8 @@
 
     <application
         android:label="GT7 Save Manager"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/ic_launcher_art"
+        android:roundIcon="@mipmap/ic_launcher_art"
         android:theme="@android:style/Theme.Material.NoActionBar">
         <activity
             android:name=".MainActivity"
