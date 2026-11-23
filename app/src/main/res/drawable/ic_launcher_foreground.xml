@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://android.com"
+    android:drawable="@mipmap/ic_launcher"
+    android:inset="-20%" />
