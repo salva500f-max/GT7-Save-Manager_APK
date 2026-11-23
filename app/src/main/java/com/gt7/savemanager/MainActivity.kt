@@ -84,10 +84,16 @@ class MainActivity : Activity() {
         }
         topBar.addView(btnLang)
 
-        val logo = ImageView(this).apply {
-            setImageResource(R.drawable.ic_gt7)
-            layoutParams = LinearLayout.LayoutParams(480, 260).apply { bottomMargin = 10 }
+       val logo = ImageView(this).apply {
+    setImageResource(R.mipmap.ic_launcher)
+    clipToOutline = true
+    outlineProvider = object : android.view.ViewOutlineProvider() {
+        override fun getOutline(view: View, outline: android.graphics.Outline) {
+            outline.setRoundRect(0, 0, view.width, view.height, 45f)
         }
+    }
+    layoutParams = LinearLayout.LayoutParams(340, 340).apply { bottomMargin = 18 }
+}
 
         val title = TextView(this).apply {
             text = "GRAN TURISMO 7"; textSize = 24f; setTextColor(Color.WHITE); typeface = Typeface.DEFAULT_BOLD; letterSpacing = 0.12f
