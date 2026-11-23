@@ -84,27 +84,19 @@ class MainActivity : Activity() {
         }
         topBar.addView(btnLang)
 
-    val logo = ImageView(this).apply {
-    try { setImageResource(R.drawable.banner_gt7) } catch (_: Throwable) {}
-    adjustViewBounds = true
-    scaleType = ImageView.ScaleType.FIT_CENTER
-    layoutParams = LinearLayout.LayoutParams(
-        LinearLayout.LayoutParams.MATCH_PARENT,
-        LinearLayout.LayoutParams.WRAP_CONTENT
-    ).apply { topMargin = 14; bottomMargin = 16 }
-}
-
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                topMargin = 14
-                bottomMargin = 16
-            }
+        val logo = ImageView(this).apply {
+            try { setImageResource(R.drawable.banner_gt7) } catch (_: Throwable) {}
+            adjustViewBounds = true
+            scaleType = ImageView.ScaleType.FIT_CENTER
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { topMargin = 14; bottomMargin = 16 }
         }
 
         val subtitle = TextView(this).apply {
             text = "PS4 OFFLINE PATCH • CUSA24769 • v2.0"; textSize = 11f; setTextColor(Color.parseColor("#8A99B5")); setPadding(0, 4, 0, 32)
+        }
+        ipLabel = TextView(this).apply {
+            textSize = 11f; setTextColor(Color.parseColor("#8A99B5"))
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         }
 
         val ipRow = LinearLayout(this).apply {
